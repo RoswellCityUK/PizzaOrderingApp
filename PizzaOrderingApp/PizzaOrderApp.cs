@@ -1,15 +1,18 @@
+using Newtonsoft.Json;
+
 namespace PizzaOrderingApp
 {
     public partial class MainPizzaOrderApp : Form
     {
         public static Pizza chosenPizza = new();
         public static bool isEverythingInitialised = false;
-        public static List<Pizza> pizzaOffer = new List<Pizza>();
+        public static List<Pizza> pizzaOffer = new();
         public static bool toppingsEditFormOpen = false;
         public List<PizzaDough> pizzaDoughsOffers = new();
         public List<PizzaSauce> pizzaSaucesOffer = new();
         public List<PizzaSize> pizzaSizesOffer = new();
         public List<PizzaTopping> pizzaToppingsOffer = new();
+        public List<Order> orderHistory = new();
 
         public MainPizzaOrderApp()
         {
@@ -70,10 +73,6 @@ namespace PizzaOrderingApp
             pizzaToppingsOffer.Add(new PizzaTopping() { Name = toppingName, Price = toppingPrice });
         }
 
-        private void BtnClearForm_Click(object sender, EventArgs e)
-        {
-        }
-
         private void BtnEditToppings_Click(object sender, EventArgs e)
         {
             if (!toppingsEditFormOpen)
@@ -91,10 +90,38 @@ namespace PizzaOrderingApp
 
         private void BtnMakeOrder_Click(object sender, EventArgs e)
         {
+            DialogResult dr = MessageBox.Show("Are you sure about your order?", "Do you confirm your order?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+
+            if (dr == DialogResult.Yes)
+            {
+                double totalPrice = GetChosenPizzaPrice();
+                Pizza orderedPizza = (Pizza) chosenPizza;
+
+                orderHistory.Add(new Order() { Pizza = orderedPizza, TotalPrice = totalPrice });
+            }
         }
 
         private void BtnOrderHistory_Click(object sender, EventArgs e)
         {
+            string orderHistoryMessage = "";
+
+            foreach(Order order in orderHistory)
+            {
+                orderHistoryMessage += string.Format(order.Pizza.Name + " - " + order.TotalPrice + "{0}", Environment.NewLine);    
+            }
+            MessageBox.Show(orderHistoryMessage, "Order History", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnResetOffer_Click(object sender, EventArgs e)
+        {
+            pizzaOffer = new List<Pizza>();
+            pizzaDoughsOffers = new();
+            pizzaSaucesOffer = new();
+            pizzaSizesOffer = new();
+            pizzaToppingsOffer = new();
+            BuildOffer();
+            PizzaDataBinding();
+            RefreshOrderFormSelections();
         }
 
         private void BuildOffer()
@@ -125,6 +152,9 @@ namespace PizzaOrderingApp
             AddPizzaToOffer("Hawaiian Pizza", "Thick", "Ketchup", "Large", new string[] { "Ham", "Pineapple", "Pepper", "Feta Cheese" });
             AddPizzaToOffer("Mexican Pizza", "Thick", "Ultra Hot", "Large", new string[] { "Chicken", "Cheddar", "Carrots" });
             AddPizzaToOffer("Pepperoni Pizza", "Thick", "Ketchup", "Large", new string[] { "Pepperoni", "Cheddar", "Olives", "Pepper" });
+            AddPizzaToOffer("Mafia Pizza", "Thick", "Ketchup", "Large", new string[] { "Ham", "Chicken", "Pepperoni", "Feta Cheese" });
+            AddPizzaToOffer("Vege Pizza", "Thick", "Ultra Hot", "Large", new string[] { "Carrots", "Pineapple", "Pepper"});
+            AddPizzaToOffer("Meat Feast Pizza", "Thick", "Ketchup", "Large", new string[] { "Pepperoni", "Chicken", "Ham", "Cheddar" });
         }
 
         private void CboChooseDough_SelectedIndexChanged(object sender, EventArgs e)
@@ -151,7 +181,7 @@ namespace PizzaOrderingApp
             RefreshOrderFormSelections();
         }
 
-        private double GetChosenPizzaPrice()
+        private static double GetChosenPizzaPrice()
         {
             double totalPrice = 0;
 
@@ -166,7 +196,7 @@ namespace PizzaOrderingApp
             return totalPrice;
         }
 
-        private string GetToppingsString()
+        private static string GetToppingsString()
         {
             string toppingsString = "No toppings selected!";
             if (chosenPizza.Toppings.Count > 0)

@@ -48,6 +48,7 @@
             this.lblChoosePizza = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.btnOrderHistory = new System.Windows.Forms.Button();
+            this.btnResetOffer = new System.Windows.Forms.Button();
             this.gboxToppings.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -235,11 +236,22 @@
             this.btnOrderHistory.UseVisualStyleBackColor = true;
             this.btnOrderHistory.Click += new System.EventHandler(this.BtnOrderHistory_Click);
             // 
+            // btnResetOffer
+            // 
+            this.btnResetOffer.Location = new System.Drawing.Point(210, 479);
+            this.btnResetOffer.Name = "btnResetOffer";
+            this.btnResetOffer.Size = new System.Drawing.Size(75, 23);
+            this.btnResetOffer.TabIndex = 38;
+            this.btnResetOffer.Text = "Reset offer";
+            this.btnResetOffer.UseVisualStyleBackColor = true;
+            this.btnResetOffer.Click += new System.EventHandler(this.btnResetOffer_Click);
+            // 
             // MainPizzaOrderApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(374, 511);
+            this.Controls.Add(this.btnResetOffer);
             this.Controls.Add(this.btnOrderHistory);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.lblTotalAmount);
@@ -288,5 +300,6 @@
         private Label lblChoosePizza;
         private Label lblTitle;
         private Button btnOrderHistory;
+        private Button btnResetOffer;
     }
 }

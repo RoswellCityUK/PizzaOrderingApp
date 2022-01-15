@@ -3,7 +3,7 @@
     public partial class EditToppings : Form
     {
         private List<PizzaTopping> temporaryToppingsList;
-        private BindingSource bindingSource = new BindingSource();
+        private BindingSource bindingSource = new();
 
         public EditToppings()
         {

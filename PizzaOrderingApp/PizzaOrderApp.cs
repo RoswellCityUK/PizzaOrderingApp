@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-
 namespace PizzaOrderingApp
 {
     public partial class MainPizzaOrderApp : Form
@@ -95,7 +93,7 @@ namespace PizzaOrderingApp
             if (dr == DialogResult.Yes)
             {
                 double totalPrice = GetChosenPizzaPrice();
-                Pizza orderedPizza = (Pizza) chosenPizza;
+                Pizza orderedPizza = (Pizza)chosenPizza;
 
                 orderHistory.Add(new Order() { Pizza = orderedPizza, TotalPrice = totalPrice });
             }
@@ -105,9 +103,9 @@ namespace PizzaOrderingApp
         {
             string orderHistoryMessage = "";
 
-            foreach(Order order in orderHistory)
+            foreach (Order order in orderHistory)
             {
-                orderHistoryMessage += string.Format(order.Pizza.Name + " - " + order.TotalPrice + "{0}", Environment.NewLine);    
+                orderHistoryMessage += string.Format(order.Pizza.Name + " - " + order.TotalPrice + "{0}", Environment.NewLine);
             }
             MessageBox.Show(orderHistoryMessage, "Order History", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -153,7 +151,7 @@ namespace PizzaOrderingApp
             AddPizzaToOffer("Mexican Pizza", "Thick", "Ultra Hot", "Large", new string[] { "Chicken", "Cheddar", "Carrots" });
             AddPizzaToOffer("Pepperoni Pizza", "Thick", "Ketchup", "Large", new string[] { "Pepperoni", "Cheddar", "Olives", "Pepper" });
             AddPizzaToOffer("Mafia Pizza", "Thick", "Ketchup", "Large", new string[] { "Ham", "Chicken", "Pepperoni", "Feta Cheese" });
-            AddPizzaToOffer("Vege Pizza", "Thick", "Ultra Hot", "Large", new string[] { "Carrots", "Pineapple", "Pepper"});
+            AddPizzaToOffer("Vege Pizza", "Thick", "Ultra Hot", "Large", new string[] { "Carrots", "Pineapple", "Pepper" });
             AddPizzaToOffer("Meat Feast Pizza", "Thick", "Ketchup", "Large", new string[] { "Pepperoni", "Chicken", "Ham", "Cheddar" });
         }
 
